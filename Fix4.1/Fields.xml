@@ -1,0 +1,2541 @@
+<Peach>
+
+<DataModel name="DM_FixFieldDefinition">
+	<String name="fieldnum"/>
+	<String value="=" token="true" />
+	<String name="fieldval"/>
+	<Blob value="0x01" valueType="hex" length="1" token="true"/>
+</DataModel>
+
+<DataModel name="DM_FixFieldLenFixupDefinition">
+	<String name="fieldnum"/>
+	<String value="=" token="true" />
+	<String name="fieldval"/>
+	<Blob value="0x01" valueType="hex" length="1" token="true"/>
+	<String name="lenfieldnum"/>
+	<String value="=" token="true" />
+	<String name="lenfieldval">
+		<Fixup class="ExpressionFixup">
+			<Param name="ref" value="fieldval"/>
+			<Param name="expression" value="len(data)"/>
+		</Fixup>
+	</String>
+	<Blob value="0x01" valueType="hex" length="1" token="true"/>
+</DataModel>
+
+<DataModel name="FIELD_Account" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="1" mutable="false"/>
+	<String name="fieldval" value="##Account##"/>
+</DataModel>
+
+<DataModel name="FIELD_AdvId" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="2" mutable="false"/>
+	<String name="fieldval" value="##AdvId##"/>
+</DataModel>
+
+<DataModel name="FIELD_AdvRefID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="3" mutable="false"/>
+	<String name="fieldval" value="##AdvRefID##"/>
+</DataModel>
+
+<DataModel name="FIELD_AdvSide" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="4" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AdvSide##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- BUY -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- SELL -->
+			<String value="S"/>
+		</Block>
+		<Block>
+			<!-- TRADE -->
+			<String value="T"/>
+		</Block>
+		<Block>
+			<!-- CROSS -->
+			<String value="X"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_AdvTransType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="5" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AdvTransType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CANCEL -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- NEW -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- REPLACE -->
+			<String value="R"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_AvgPx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="6" mutable="false"/>
+	<String name="fieldval" value="##AvgPx##"/>
+</DataModel>
+
+<DataModel name="FIELD_BeginSeqNo" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="7" mutable="false"/>
+	<String name="fieldval" value="##BeginSeqNo##"/>
+</DataModel>
+
+<DataModel name="FIELD_BeginString" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="8" mutable="false"/>
+	<!--<String name="fieldval" value="##BeginSeqNo##"/>-->
+	<String name="fieldval" value="FIX.4.1"/>
+</DataModel>
+
+<DataModel name="FIELD_BodyLength" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="9" mutable="false"/>
+	<String name="fieldval" value="##BodyLength##"/>
+</DataModel>
+
+<DataModel name="FIELD_CheckSum" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="10" mutable="false"/>
+	<String name="fieldval" value="000"/>
+</DataModel>
+
+<DataModel name="FIELD_ClOrdID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="11" mutable="false"/>
+	<String name="fieldval" value="##ClOrdID##"/>
+</DataModel>
+
+<DataModel name="FIELD_Commission" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="12" mutable="false"/>
+	<String name="fieldval" value="##Commission##"/>
+</DataModel>
+
+<DataModel name="FIELD_CommType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="13" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##CommType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- PER_SHARE -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- PERCENTAGE -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- ABSOLUTE -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_CumQty" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="14" mutable="false"/>
+	<String name="fieldval" value="##CumQty##"/>
+</DataModel>
+
+<DataModel name="FIELD_Currency" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="15" mutable="false"/>
+	<String name="fieldval" value="##Currency##"/>
+</DataModel>
+
+<DataModel name="FIELD_EndSeqNo" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="16" mutable="false"/>
+	<String name="fieldval" value="##EndSeqNo##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExecID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="17" mutable="false"/>
+	<String name="fieldval" value="##ExecID##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExecInst" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="18" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ExecInst##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- STAY_ON_OFFERSIDE -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- NOT_HELD -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- WORK -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- GO_ALONG -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- OVER_THE_DAY -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- HELD -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- PARTICIPATE_DONT_INITIATE -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- STRICT_SCALE -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- TRY_TO_SCALE -->
+			<String value="8"/>
+		</Block>
+		<Block>
+			<!-- STAY_ON_BIDSIDE -->
+			<String value="9"/>
+		</Block>
+		<Block>
+			<!-- NO_CROSS -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- OK_TO_CROSS -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- CALL_FIRST -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- PERCENT_OF_VOLUME -->
+			<String value="D"/>
+		</Block>
+		<Block>
+			<!-- DO_NOT_INCREASE -->
+			<String value="E"/>
+		</Block>
+		<Block>
+			<!-- DO_NOT_REDUCE -->
+			<String value="F"/>
+		</Block>
+		<Block>
+			<!-- ALL_OR_NONE -->
+			<String value="G"/>
+		</Block>
+		<Block>
+			<!-- INSTITUTIONS_ONLY -->
+			<String value="I"/>
+		</Block>
+		<Block>
+			<!-- LAST_PEG -->
+			<String value="L"/>
+		</Block>
+		<Block>
+			<!-- MID_PRICE_PEG -->
+			<String value="M"/>
+		</Block>
+		<Block>
+			<!-- NON_NEGOTIABLE -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- OPENING_PEG -->
+			<String value="O"/>
+		</Block>
+		<Block>
+			<!-- MARKET_PEG -->
+			<String value="P"/>
+		</Block>
+		<Block>
+			<!-- PRIMARY_PEG -->
+			<String value="R"/>
+		</Block>
+		<Block>
+			<!-- SUSPEND -->
+			<String value="S"/>
+		</Block>
+		<Block>
+			<!-- CUSTOMER_DISPLAY_INSTRUCTION -->
+			<String value="U"/>
+		</Block>
+		<Block>
+			<!-- NETTING -->
+			<String value="V"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_ExecRefID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="19" mutable="false"/>
+	<String name="fieldval" value="##ExecRefID##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExecTransType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="20" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ExecTransType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NEW -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- CANCEL -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- CORRECT -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- STATUS -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_HandlInst" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="21" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##HandlInst##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- AUTOMATED_EXECUTION_ORDER_PUBLIC_BROKER_INTERVENTION_OK -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- MANUAL_ORDER_BEST_EXECUTION -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_IDSource" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="22" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IDSource##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CUSIP -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- SEDOL -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- QUIK -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- ISIN_NUMBER -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- RIC_CODE -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- ISO_CURRENCY_CODE -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- ISO_COUNTRY_CODE -->
+			<String value="7"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_IOIid" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="23" mutable="false"/>
+	<String name="fieldval" value="##IOIid##"/>
+</DataModel>
+
+<DataModel name="FIELD_IOIOthSvc" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="24" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IOIOthSvc##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- AUTEX -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- BRIDGE -->
+			<String value="B"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_IOIQltyInd" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="25" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IOIQltyInd##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- HIGH -->
+			<String value="H"/>
+		</Block>
+		<Block>
+			<!-- LOW -->
+			<String value="L"/>
+		</Block>
+		<Block>
+			<!-- MEDIUM -->
+			<String value="M"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_IOIRefID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="26" mutable="false"/>
+	<String name="fieldval" value="##IOIRefID##"/>
+</DataModel>
+
+<DataModel name="FIELD_IOIShares" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="27" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IOIShares##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- LARGE -->
+			<String value="L"/>
+		</Block>
+		<Block>
+			<!-- MEDIUM -->
+			<String value="M"/>
+		</Block>
+		<Block>
+			<!-- SMALL -->
+			<String value="S"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_IOITransType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="28" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IOITransType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CANCEL -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- NEW -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- REPLACE -->
+			<String value="R"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_LastCapacity" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="29" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##LastCapacity##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- AGENT -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- CROSS_AS_AGENT -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- CROSS_AS_PRINCIPAL -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- PRINCIPAL -->
+			<String value="4"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_LastMkt" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="30" mutable="false"/>
+	<String name="fieldval" value="##LastMkt##"/>
+</DataModel>
+
+<DataModel name="FIELD_LastPx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="31" mutable="false"/>
+	<String name="fieldval" value="##LastPx##"/>
+</DataModel>
+
+<DataModel name="FIELD_LastShares" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="32" mutable="false"/>
+	<String name="fieldval" value="##LastShares##"/>
+</DataModel>
+
+<DataModel name="FIELD_LinesOfText" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="33" mutable="false"/>
+	<String name="fieldval" value="##LinesOfText##"/>
+</DataModel>
+
+<DataModel name="FIELD_MsgSeqNum" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="34" mutable="false"/>
+	<String name="fieldval" value="##MsgSeqNum##"/>
+</DataModel>
+
+<DataModel name="FIELD_MsgType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="35" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##MsgType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- HEARTBEAT -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- TEST_REQUEST -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- RESEND_REQUEST -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- REJECT -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- SEQUENCE_RESET -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- LOGOUT -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- INDICATION_OF_INTEREST -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- ADVERTISEMENT -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- EXECUTION_REPORT -->
+			<String value="8"/>
+		</Block>
+		<Block>
+			<!-- ORDER_CANCEL_REJECT -->
+			<String value="9"/>
+		</Block>
+		<Block>
+			<!-- LOGON -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- NEWS -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- EMAIL -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- ORDER_D -->
+			<String value="D"/>
+		</Block>
+		<Block>
+			<!-- ORDER_E -->
+			<String value="E"/>
+		</Block>
+		<Block>
+			<!-- ORDER_CANCEL_REQUEST -->
+			<String value="F"/>
+		</Block>
+		<Block>
+			<!-- ORDER_CANCEL_REPLACE_REQUEST -->
+			<String value="G"/>
+		</Block>
+		<Block>
+			<!-- ORDER_STATUS_REQUEST -->
+			<String value="H"/>
+		</Block>
+		<Block>
+			<!-- ALLOCATION -->
+			<String value="J"/>
+		</Block>
+		<Block>
+			<!-- LIST_CANCEL_REQUEST -->
+			<String value="K"/>
+		</Block>
+		<Block>
+			<!-- LIST_EXECUTE -->
+			<String value="L"/>
+		</Block>
+		<Block>
+			<!-- LIST_STATUS_REQUEST -->
+			<String value="M"/>
+		</Block>
+		<Block>
+			<!-- LIST_STATUS -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- ALLOCATION_ACK -->
+			<String value="P"/>
+		</Block>
+		<Block>
+			<!-- DONT_KNOW_TRADE -->
+			<String value="Q"/>
+		</Block>
+		<Block>
+			<!-- QUOTE_REQUEST -->
+			<String value="R"/>
+		</Block>
+		<Block>
+			<!-- QUOTE -->
+			<String value="S"/>
+		</Block>
+		<Block>
+			<!-- SETTLEMENT_INSTRUCTIONS -->
+			<String value="T"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_NewSeqNo" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="36" mutable="false"/>
+	<String name="fieldval" value="##NewSeqNo##"/>
+</DataModel>
+
+<DataModel name="FIELD_OrderID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="37" mutable="false"/>
+	<String name="fieldval" value="##OrderID##"/>
+</DataModel>
+
+<DataModel name="FIELD_OrderQty" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="38" mutable="false"/>
+	<String name="fieldval" value="##OrderQty##"/>
+</DataModel>
+
+<DataModel name="FIELD_OrdStatus" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="39" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##OrdStatus##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NEW -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- PARTIALLY_FILLED -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- FILLED -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- DONE_FOR_DAY -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- CANCELED -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- REPLACED -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- PENDING_CANCEL_REPLACE -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- STOPPED -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- REJECTED -->
+			<String value="8"/>
+		</Block>
+		<Block>
+			<!-- SUSPENDED -->
+			<String value="9"/>
+		</Block>
+		<Block>
+			<!-- PENDING_NEW -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- CALCULATED -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- EXPIRED -->
+			<String value="C"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_OrdType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="40" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##OrdType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- MARKET -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- LIMIT -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- STOP -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- STOP_LIMIT -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- MARKET_ON_CLOSE -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- WITH_OR_WITHOUT -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- LIMIT_OR_BETTER -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- LIMIT_WITH_OR_WITHOUT -->
+			<String value="8"/>
+		</Block>
+		<Block>
+			<!-- ON_BASIS -->
+			<String value="9"/>
+		</Block>
+		<Block>
+			<!-- ON_CLOSE -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- LIMIT_ON_CLOSE -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- FOREX_C -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- PREVIOUSLY_QUOTED -->
+			<String value="D"/>
+		</Block>
+		<Block>
+			<!-- PREVIOUSLY_INDICATED -->
+			<String value="E"/>
+		</Block>
+		<Block>
+			<!-- FOREX_F -->
+			<String value="F"/>
+		</Block>
+		<Block>
+			<!-- FOREX_G -->
+			<String value="G"/>
+		</Block>
+		<Block>
+			<!-- FOREX_H -->
+			<String value="H"/>
+		</Block>
+		<Block>
+			<!-- PEGGED -->
+			<String value="P"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_OrigClOrdID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="41" mutable="false"/>
+	<String name="fieldval" value="##OrigClOrdID##"/>
+</DataModel>
+
+<DataModel name="FIELD_OrigTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="42" mutable="false"/>
+	<String name="fieldval" value="##OrigTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_PossDupFlag" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="43" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##PossDupFlag##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_Price" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="44" mutable="false"/>
+	<String name="fieldval" value="##Price##"/>
+</DataModel>
+
+<DataModel name="FIELD_RefSeqNum" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="45" mutable="false"/>
+	<String name="fieldval" value="##RefSeqNum##"/>
+</DataModel>
+
+<DataModel name="FIELD_RelatdSym" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="46" mutable="false"/>
+	<String name="fieldval" value="##RelatdSym##"/>
+</DataModel>
+
+<DataModel name="FIELD_Rule80A" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="47" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##Rule80A##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- AGENCY_SINGLE_ORDER -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- SHORT_EXEMPT_TRANSACTION_B -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_NON_INDEX_ARB_FOR_MEMBER_FIRM_ORG -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_INDEX_ARB_FOR_MEMBER_FIRM_ORG -->
+			<String value="D"/>
+		</Block>
+		<Block>
+			<!-- REGISTERED_EQUITY_MARKET_MAKER_TRADES -->
+			<String value="E"/>
+		</Block>
+		<Block>
+			<!-- SHORT_EXEMPT_TRANSACTION_F -->
+			<String value="F"/>
+		</Block>
+		<Block>
+			<!-- SHORT_EXEMPT_TRANSACTION_H -->
+			<String value="H"/>
+		</Block>
+		<Block>
+			<!-- INDIVIDUAL_INVESTOR_SINGLE_ORDER -->
+			<String value="I"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_INDEX_ARB_FOR_INDIVIDUAL_CUSTOMER -->
+			<String value="J"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_NON_INDEX_ARB_FOR_INDIVIDUAL_CUSTOMER -->
+			<String value="K"/>
+		</Block>
+		<Block>
+			<!-- SHORT_EXEMPT_TRANSACTION_FOR_MEMBER_COMPETING_MARKET_MAKER_AFFILIATED_WITH_THE_FIRM_CLEARING_THE_TRADE -->
+			<String value="L"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_INDEX_ARB_FOR_OTHER_MEMBER -->
+			<String value="M"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_NON_INDEX_ARB_FOR_OTHER_MEMBER -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- COMPETING_DEALER_TRADES_O -->
+			<String value="O"/>
+		</Block>
+		<Block>
+			<!-- PRINCIPAL -->
+			<String value="P"/>
+		</Block>
+		<Block>
+			<!-- COMPETING_DEALER_TRADES_R -->
+			<String value="R"/>
+		</Block>
+		<Block>
+			<!-- SPECIALIST_TRADES -->
+			<String value="S"/>
+		</Block>
+		<Block>
+			<!-- COMPETING_DEALER_TRADES_T -->
+			<String value="T"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_INDEX_ARB_FOR_OTHER_AGENCY -->
+			<String value="U"/>
+		</Block>
+		<Block>
+			<!-- ALL_OTHER_ORDERS_AS_AGENT_FOR_OTHER_MEMBER -->
+			<String value="W"/>
+		</Block>
+		<Block>
+			<!-- SHORT_EXEMPT_TRANSACTION_FOR_MEMBER_COMPETING_MARKET_MAKER_NOT_AFFILIATED_WITH_THE_FIRM_CLEARING_THE_TRADE -->
+			<String value="X"/>
+		</Block>
+		<Block>
+			<!-- PROGRAM_ORDER_NON_INDEX_ARB_FOR_OTHER_AGENCY -->
+			<String value="Y"/>
+		</Block>
+		<Block>
+			<!-- SHORT_EXEMPT_TRANSACTION_FOR_NON_MEMBER_COMPETING_MARKET_MAKER -->
+			<String value="Z"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_SecurityID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="48" mutable="false"/>
+	<String name="fieldval" value="##SecurityID##"/>
+</DataModel>
+
+<DataModel name="FIELD_SenderCompID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="49" mutable="false"/>
+	<String name="fieldval" value="##SenderCompID##"/>
+</DataModel>
+
+<DataModel name="FIELD_SenderSubID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="50" mutable="false"/>
+	<String name="fieldval" value="##SenderSubID##"/>
+</DataModel>
+
+<DataModel name="FIELD_SendingTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="52" mutable="false"/>
+	<String name="fieldval" value="##SendingTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_Shares" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="53" mutable="false"/>
+	<String name="fieldval" value="##Shares##"/>
+</DataModel>
+
+<DataModel name="FIELD_Side" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="54" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##Side##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- BUY -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- SELL -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- BUY_MINUS -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- SELL_PLUS -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- SELL_SHORT -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- SELL_SHORT_EXEMPT -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- UNDISCLOSED -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- CROSS -->
+			<String value="8"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_Symbol" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="55" mutable="false"/>
+	<String name="fieldval" value="##Symbol##"/>
+</DataModel>
+
+<DataModel name="FIELD_TargetCompID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="56" mutable="false"/>
+	<String name="fieldval" value="##TargetCompID##"/>
+</DataModel>
+
+<DataModel name="FIELD_TargetSubID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="57" mutable="false"/>
+	<String name="fieldval" value="##TargetSubID##"/>
+</DataModel>
+
+<DataModel name="FIELD_Text" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="58" mutable="false"/>
+	<String name="fieldval" value="##Text##"/>
+</DataModel>
+
+<DataModel name="FIELD_TimeInForce" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="59" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##TimeInForce##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- DAY -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- GOOD_TILL_CANCEL -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- AT_THE_OPENING -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- IMMEDIATE_OR_CANCEL -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- FILL_OR_KILL -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- GOOD_TILL_CROSSING -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- GOOD_TILL_DATE -->
+			<String value="6"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_TransactTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="60" mutable="false"/>
+	<String name="fieldval" value="##TransactTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_Urgency" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="61" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##Urgency##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NORMAL -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- FLASH -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- BACKGROUND -->
+			<String value="2"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_ValidUntilTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="62" mutable="false"/>
+	<String name="fieldval" value="##ValidUntilTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlmntTyp" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="63" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SettlmntTyp##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- REGULAR -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- CASH -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- NEXT_DAY -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- T_PLUS_2 -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- T_PLUS_3 -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- T_PLUS_4 -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- FUTURE -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- WHEN_ISSUED -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- SELLERS_OPTION -->
+			<String value="8"/>
+		</Block>
+		<Block>
+			<!-- T_PLUS_5 -->
+			<String value="9"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_FutSettDate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="64" mutable="false"/>
+	<String name="fieldval" value="##FutSettDate##"/>
+</DataModel>
+
+<DataModel name="FIELD_SymbolSfx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="65" mutable="false"/>
+	<String name="fieldval" value="##SymbolSfx##"/>
+</DataModel>
+
+<DataModel name="FIELD_ListID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="66" mutable="false"/>
+	<String name="fieldval" value="##ListID##"/>
+</DataModel>
+
+<DataModel name="FIELD_ListSeqNo" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="67" mutable="false"/>
+	<String name="fieldval" value="##ListSeqNo##"/>
+</DataModel>
+
+<DataModel name="FIELD_ListNoOrds" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="68" mutable="false"/>
+	<String name="fieldval" value="##ListNoOrds##"/>
+</DataModel>
+
+<DataModel name="FIELD_ListExecInst" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="69" mutable="false"/>
+	<String name="fieldval" value="##ListExecInst##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="70" mutable="false"/>
+	<String name="fieldval" value="##AllocID##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocTransType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="71" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AllocTransType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NEW -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- REPLACE -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- CANCEL -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- PRELIMINARY -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- CALCULATED -->
+			<String value="4"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_RefAllocID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="72" mutable="false"/>
+	<String name="fieldval" value="##RefAllocID##"/>
+</DataModel>
+
+<DataModel name="FIELD_NoOrders" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="73" mutable="false"/>
+	<String name="fieldval" value="##NoOrders##"/>
+</DataModel>
+
+<DataModel name="FIELD_AvgPrxPrecision" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="74" mutable="false"/>
+	<String name="fieldval" value="##AvgPrxPrecision##"/>
+</DataModel>
+
+<DataModel name="FIELD_TradeDate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="75" mutable="false"/>
+	<String name="fieldval" value="##TradeDate##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExecBroker" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="76" mutable="false"/>
+	<String name="fieldval" value="##ExecBroker##"/>
+</DataModel>
+
+<DataModel name="FIELD_OpenClose" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="77" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##OpenClose##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CLOSE -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- OPEN -->
+			<String value="O"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_NoAllocs" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="78" mutable="false"/>
+	<String name="fieldval" value="##NoAllocs##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocAccount" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="79" mutable="false"/>
+	<String name="fieldval" value="##AllocAccount##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocShares" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="80" mutable="false"/>
+	<String name="fieldval" value="##AllocShares##"/>
+</DataModel>
+
+<DataModel name="FIELD_ProcessCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="81" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ProcessCode##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- REGULAR -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- SOFT_DOLLAR -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- STEP_IN -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- STEP_OUT -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- SOFT_DOLLAR_STEP_IN -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- SOFT_DOLLAR_STEP_OUT -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- PLAN_SPONSOR -->
+			<String value="6"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_NoRpts" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="82" mutable="false"/>
+	<String name="fieldval" value="##NoRpts##"/>
+</DataModel>
+
+<DataModel name="FIELD_RptSeq" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="83" mutable="false"/>
+	<String name="fieldval" value="##RptSeq##"/>
+</DataModel>
+
+<DataModel name="FIELD_CxlQty" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="84" mutable="false"/>
+	<String name="fieldval" value="##CxlQty##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocStatus" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="87" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AllocStatus##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- ACCEPTED -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- REJECTED -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- PARTIAL_ACCEPT -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- RECEIVED -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_AllocRejCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="88" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AllocRejCode##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- UNKNOWN_ACCOUNT -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- INCORRECT_QUANTITY -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- INCORRECT_AVERAGE_PRICE -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- UNKNOWN_EXECUTING_BROKER_MNEMONIC -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- COMMISSION_DIFFERENCE -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- UNKNOWN_ORDERID -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- UNKNOWN_LISTID -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- OTHER -->
+			<String value="7"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_Signature" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="89" mutable="false"/>
+	<Blob name="fieldval" valueType="string" value="##Signature##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecureDataLen" ref="DM_FixFieldDefinition">
+	<String name="lenfieldnum" value="90" mutable="false"/>
+	<String name="lenfieldval" value="computedbyfixup"/>
+</DataModel>
+
+<DataModel name="FIELD_SecureData" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="91" mutable="false"/>
+	<Blob name="fieldval" valueType="string" value="##SecureData##"/>
+</DataModel>
+
+<DataModel name="FIELD_BrokerOfCredit" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="92" mutable="false"/>
+	<String name="fieldval" value="##BrokerOfCredit##"/>
+</DataModel>
+
+<DataModel name="FIELD_SignatureLength" ref="DM_FixFieldDefinition">
+	<String name="lenfieldnum" value="93" mutable="false"/>
+	<String name="lenfieldval" value="computedbyfixup"/>
+</DataModel>
+
+<DataModel name="FIELD_EmailType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="94" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##EmailType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NEW -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- REPLY -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- ADMIN_REPLY -->
+			<String value="2"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_RawDataLength" ref="DM_FixFieldDefinition">
+	<String name="lenfieldnum" value="95" mutable="false"/>
+	<String name="lenfieldval" value="computedbyfixup"/>
+</DataModel>
+
+<DataModel name="FIELD_RawData" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="96" mutable="false"/>
+	<Blob name="fieldval" valueType="string" value="##RawData##"/>
+</DataModel>
+
+<DataModel name="FIELD_PossResend" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="97" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##PossResend##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_EncryptMethod" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="98" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##EncryptMethod##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NONE -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- PKCS -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- DES -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- PKCS_DES -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- PGP_DES -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- PGP_DES_MD5 -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- PEM_DES_MD5 -->
+			<String value="6"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_StopPx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="99" mutable="false"/>
+	<String name="fieldval" value="##StopPx##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExDestination" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="100" mutable="false"/>
+	<String name="fieldval" value="##ExDestination##"/>
+</DataModel>
+
+<DataModel name="FIELD_CxlRejReason" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="102" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##CxlRejReason##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- TOO_LATE_TO_CANCEL -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- UNKNOWN_ORDER -->
+			<String value="1"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_OrdRejReason" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="103" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##OrdRejReason##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- BROKER_OPTION -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- UNKNOWN_SYMBOL -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- EXCHANGE_CLOSED -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- ORDER_EXCEEDS_LIMIT -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- TOO_LATE_TO_ENTER -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- UNKNOWN_ORDER -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- DUPLICATE_ORDER -->
+			<String value="6"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_IOIQualifier" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="104" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IOIQualifier##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- ALL_OR_NONE -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- AT_THE_CLOSE -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- IN_TOUCH_WITH -->
+			<String value="I"/>
+		</Block>
+		<Block>
+			<!-- LIMIT -->
+			<String value="L"/>
+		</Block>
+		<Block>
+			<!-- MORE_BEHIND -->
+			<String value="M"/>
+		</Block>
+		<Block>
+			<!-- AT_THE_OPEN -->
+			<String value="O"/>
+		</Block>
+		<Block>
+			<!-- TAKING_A_POSITION -->
+			<String value="P"/>
+		</Block>
+		<Block>
+			<!-- AT_THE_MARKET -->
+			<String value="Q"/>
+		</Block>
+		<Block>
+			<!-- PORTFOLIO_SHOW_N -->
+			<String value="S"/>
+		</Block>
+		<Block>
+			<!-- THROUGH_THE_DAY -->
+			<String value="T"/>
+		</Block>
+		<Block>
+			<!-- VERSUS -->
+			<String value="V"/>
+		</Block>
+		<Block>
+			<!-- INDICATION -->
+			<String value="W"/>
+		</Block>
+		<Block>
+			<!-- CROSSING_OPPORTUNITY -->
+			<String value="X"/>
+		</Block>
+		<Block>
+			<!-- AT_THE_MIDPOINT -->
+			<String value="Y"/>
+		</Block>
+		<Block>
+			<!-- PRE_OPEN -->
+			<String value="Z"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_WaveNo" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="105" mutable="false"/>
+	<String name="fieldval" value="##WaveNo##"/>
+</DataModel>
+
+<DataModel name="FIELD_Issuer" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="106" mutable="false"/>
+	<String name="fieldval" value="##Issuer##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecurityDesc" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="107" mutable="false"/>
+	<String name="fieldval" value="##SecurityDesc##"/>
+</DataModel>
+
+<DataModel name="FIELD_HeartBtInt" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="108" mutable="false"/>
+	<String name="fieldval" value="##HeartBtInt##"/>
+</DataModel>
+
+<DataModel name="FIELD_ClientID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="109" mutable="false"/>
+	<String name="fieldval" value="##ClientID##"/>
+</DataModel>
+
+<DataModel name="FIELD_MinQty" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="110" mutable="false"/>
+	<String name="fieldval" value="##MinQty##"/>
+</DataModel>
+
+<DataModel name="FIELD_MaxFloor" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="111" mutable="false"/>
+	<String name="fieldval" value="##MaxFloor##"/>
+</DataModel>
+
+<DataModel name="FIELD_TestReqID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="112" mutable="false"/>
+	<String name="fieldval" value="##TestReqID##"/>
+</DataModel>
+
+<DataModel name="FIELD_ReportToExch" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="113" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ReportToExch##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_LocateReqd" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="114" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##LocateReqd##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_OnBehalfOfCompID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="115" mutable="false"/>
+	<String name="fieldval" value="##OnBehalfOfCompID##"/>
+</DataModel>
+
+<DataModel name="FIELD_OnBehalfOfSubID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="116" mutable="false"/>
+	<String name="fieldval" value="##OnBehalfOfSubID##"/>
+</DataModel>
+
+<DataModel name="FIELD_QuoteID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="117" mutable="false"/>
+	<String name="fieldval" value="##QuoteID##"/>
+</DataModel>
+
+<DataModel name="FIELD_NetMoney" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="118" mutable="false"/>
+	<String name="fieldval" value="##NetMoney##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlCurrAmt" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="119" mutable="false"/>
+	<String name="fieldval" value="##SettlCurrAmt##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlCurrency" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="120" mutable="false"/>
+	<String name="fieldval" value="##SettlCurrency##"/>
+</DataModel>
+
+<DataModel name="FIELD_ForexReq" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="121" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ForexReq##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_OrigSendingTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="122" mutable="false"/>
+	<String name="fieldval" value="##OrigSendingTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_GapFillFlag" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="123" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##GapFillFlag##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_NoExecs" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="124" mutable="false"/>
+	<String name="fieldval" value="##NoExecs##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExpireTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="126" mutable="false"/>
+	<String name="fieldval" value="##ExpireTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_DKReason" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="127" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##DKReason##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- UNKNOWN_SYMBOL -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- WRONG_SIDE -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- QUANTITY_EXCEEDS_ORDER -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- NO_MATCHING_ORDER -->
+			<String value="D"/>
+		</Block>
+		<Block>
+			<!-- PRICE_EXCEEDS_LIMIT -->
+			<String value="E"/>
+		</Block>
+		<Block>
+			<!-- OTHER -->
+			<String value="Z"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_DeliverToCompID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="128" mutable="false"/>
+	<String name="fieldval" value="##DeliverToCompID##"/>
+</DataModel>
+
+<DataModel name="FIELD_DeliverToSubID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="129" mutable="false"/>
+	<String name="fieldval" value="##DeliverToSubID##"/>
+</DataModel>
+
+<DataModel name="FIELD_IOINaturalFlag" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="130" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##IOINaturalFlag##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_QuoteReqID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="131" mutable="false"/>
+	<String name="fieldval" value="##QuoteReqID##"/>
+</DataModel>
+
+<DataModel name="FIELD_BidPx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="132" mutable="false"/>
+	<String name="fieldval" value="##BidPx##"/>
+</DataModel>
+
+<DataModel name="FIELD_OfferPx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="133" mutable="false"/>
+	<String name="fieldval" value="##OfferPx##"/>
+</DataModel>
+
+<DataModel name="FIELD_BidSize" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="134" mutable="false"/>
+	<String name="fieldval" value="##BidSize##"/>
+</DataModel>
+
+<DataModel name="FIELD_OfferSize" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="135" mutable="false"/>
+	<String name="fieldval" value="##OfferSize##"/>
+</DataModel>
+
+<DataModel name="FIELD_NoMiscFees" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="136" mutable="false"/>
+	<String name="fieldval" value="##NoMiscFees##"/>
+</DataModel>
+
+<DataModel name="FIELD_MiscFeeAmt" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="137" mutable="false"/>
+	<String name="fieldval" value="##MiscFeeAmt##"/>
+</DataModel>
+
+<DataModel name="FIELD_MiscFeeCurr" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="138" mutable="false"/>
+	<String name="fieldval" value="##MiscFeeCurr##"/>
+</DataModel>
+
+<DataModel name="FIELD_MiscFeeType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="139" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##MiscFeeType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- REGULATORY -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- TAX -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- LOCAL_COMMISSION -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- EXCHANGE_FEES -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- STAMP -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- LEVY -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- OTHER -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- MARKUP -->
+			<String value="8"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_PrevClosePx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="140" mutable="false"/>
+	<String name="fieldval" value="##PrevClosePx##"/>
+</DataModel>
+
+<DataModel name="FIELD_ResetSeqNumFlag" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="141" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ResetSeqNumFlag##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_SenderLocationID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="142" mutable="false"/>
+	<String name="fieldval" value="##SenderLocationID##"/>
+</DataModel>
+
+<DataModel name="FIELD_TargetLocationID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="143" mutable="false"/>
+	<String name="fieldval" value="##TargetLocationID##"/>
+</DataModel>
+
+<DataModel name="FIELD_OnBehalfOfLocationID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="144" mutable="false"/>
+	<String name="fieldval" value="##OnBehalfOfLocationID##"/>
+</DataModel>
+
+<DataModel name="FIELD_DeliverToLocationID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="145" mutable="false"/>
+	<String name="fieldval" value="##DeliverToLocationID##"/>
+</DataModel>
+
+<DataModel name="FIELD_NoRelatedSym" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="146" mutable="false"/>
+	<String name="fieldval" value="##NoRelatedSym##"/>
+</DataModel>
+
+<DataModel name="FIELD_Subject" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="147" mutable="false"/>
+	<String name="fieldval" value="##Subject##"/>
+</DataModel>
+
+<DataModel name="FIELD_Headline" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="148" mutable="false"/>
+	<String name="fieldval" value="##Headline##"/>
+</DataModel>
+
+<DataModel name="FIELD_URLLink" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="149" mutable="false"/>
+	<String name="fieldval" value="##URLLink##"/>
+</DataModel>
+
+<DataModel name="FIELD_ExecType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="150" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##ExecType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NEW -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- PARTIAL_FILL -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- FILL -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- DONE_FOR_DAY -->
+			<String value="3"/>
+		</Block>
+		<Block>
+			<!-- CANCELLED -->
+			<String value="4"/>
+		</Block>
+		<Block>
+			<!-- REPLACE -->
+			<String value="5"/>
+		</Block>
+		<Block>
+			<!-- PENDING_CANCEL_REPLACE -->
+			<String value="6"/>
+		</Block>
+		<Block>
+			<!-- STOPPED -->
+			<String value="7"/>
+		</Block>
+		<Block>
+			<!-- REJECTED -->
+			<String value="8"/>
+		</Block>
+		<Block>
+			<!-- SUSPENDED -->
+			<String value="9"/>
+		</Block>
+		<Block>
+			<!-- PENDING_NEW -->
+			<String value="A"/>
+		</Block>
+		<Block>
+			<!-- CALCULATED -->
+			<String value="B"/>
+		</Block>
+		<Block>
+			<!-- EXPIRED -->
+			<String value="C"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_LeavesQty" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="151" mutable="false"/>
+	<String name="fieldval" value="##LeavesQty##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashOrderQty" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="152" mutable="false"/>
+	<String name="fieldval" value="##CashOrderQty##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocAvgPx" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="153" mutable="false"/>
+	<String name="fieldval" value="##AllocAvgPx##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocNetMoney" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="154" mutable="false"/>
+	<String name="fieldval" value="##AllocNetMoney##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlCurrFxRate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="155" mutable="false"/>
+	<String name="fieldval" value="##SettlCurrFxRate##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlCurrFxRateCalc" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="156" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SettlCurrFxRateCalc##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- MULTIPLY -->
+			<String value="M"/>
+		</Block>
+		<Block>
+			<!-- DIVIDE -->
+			<String value="D"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_NumDaysInterest" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="157" mutable="false"/>
+	<String name="fieldval" value="##NumDaysInterest##"/>
+</DataModel>
+
+<DataModel name="FIELD_AccruedInterestRate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="158" mutable="false"/>
+	<String name="fieldval" value="##AccruedInterestRate##"/>
+</DataModel>
+
+<DataModel name="FIELD_AccruedInterestAmt" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="159" mutable="false"/>
+	<String name="fieldval" value="##AccruedInterestAmt##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlInstMode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="160" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SettlInstMode##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- DEFAULT -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- STANDING_INSTRUCTIONS_PROVIDED -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- SPECIFIC_ALLOCATION_ACCOUNT_OVERRIDING -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- SPECIFIC_ALLOCATION_ACCOUNT_STANDING -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_AllocText" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="161" mutable="false"/>
+	<String name="fieldval" value="##AllocText##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlInstID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="162" mutable="false"/>
+	<String name="fieldval" value="##SettlInstID##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlInstTransType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="163" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SettlInstTransType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CANCEL -->
+			<String value="C"/>
+		</Block>
+		<Block>
+			<!-- NEW -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- REPLACE -->
+			<String value="R"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_EmailThreadID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="164" mutable="false"/>
+	<String name="fieldval" value="##EmailThreadID##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlInstSource" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="165" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SettlInstSource##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- BROKERS_INSTRUCTIONS -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- INSTITUTIONS_INSTRUCTIONS -->
+			<String value="2"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_SettlLocation" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="166" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SettlLocation##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CEDEL -->
+			<String value="CED"/>
+		</Block>
+		<Block>
+			<!-- DEPOSITORY_TRUST_COMPANY -->
+			<String value="DTC"/>
+		</Block>
+		<Block>
+			<!-- EUROCLEAR -->
+			<String value="EUR"/>
+		</Block>
+		<Block>
+			<!-- FEDERAL_BOOK_ENTRY -->
+			<String value="FED"/>
+		</Block>
+		<Block>
+			<!-- LOCAL_MARKET_SETTLE_LOCATION -->
+			<String value="ISO Country Code"/>
+		</Block>
+		<Block>
+			<!-- PHYSICAL -->
+			<String value="PNY"/>
+		</Block>
+		<Block>
+			<!-- PARTICIPANT_TRUST_COMPANY -->
+			<String value="PTC"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_SecurityType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="167" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##SecurityType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- BANKERS_ACCEPTANCE -->
+			<String value="BA"/>
+		</Block>
+		<Block>
+			<!-- CERTIFICATE_OF_DEPOSIT -->
+			<String value="CD"/>
+		</Block>
+		<Block>
+			<!-- COLLATERALIZE_MORTGAGE_OBLIGATION -->
+			<String value="CMO"/>
+		</Block>
+		<Block>
+			<!-- CORPORATE_BOND -->
+			<String value="CORP"/>
+		</Block>
+		<Block>
+			<!-- COMMERCIAL_PAPER -->
+			<String value="CP"/>
+		</Block>
+		<Block>
+			<!-- CORPORATE_PRIVATE_PLACEMENT -->
+			<String value="CPP"/>
+		</Block>
+		<Block>
+			<!-- COMMON_STOCK -->
+			<String value="CS"/>
+		</Block>
+		<Block>
+			<!-- FEDERAL_HOUSING_AUTHORITY -->
+			<String value="FHA"/>
+		</Block>
+		<Block>
+			<!-- FEDERAL_HOME_LOAN -->
+			<String value="FHL"/>
+		</Block>
+		<Block>
+			<!-- FEDERAL_NATIONAL_MORTGAGE_ASSOCIATION -->
+			<String value="FN"/>
+		</Block>
+		<Block>
+			<!-- FOREIGN_EXCHANGE_CONTRACT -->
+			<String value="FOR"/>
+		</Block>
+		<Block>
+			<!-- FUTURE -->
+			<String value="FUT"/>
+		</Block>
+		<Block>
+			<!-- GOVERNMENT_NATIONAL_MORTGAGE_ASSOCIATION -->
+			<String value="GN"/>
+		</Block>
+		<Block>
+			<!-- TREASURIES_PLUS_AGENCY_DEBENTURE -->
+			<String value="GOVT"/>
+		</Block>
+		<Block>
+			<!-- MUTUAL_FUND -->
+			<String value="MF"/>
+		</Block>
+		<Block>
+			<!-- MORTGAGE_INTEREST_ONLY -->
+			<String value="MIO"/>
+		</Block>
+		<Block>
+			<!-- MORTGAGE_PRINCIPLE_ONLY -->
+			<String value="MPO"/>
+		</Block>
+		<Block>
+			<!-- MORTGAGE_PRIVATE_PLACEMENT -->
+			<String value="MPP"/>
+		</Block>
+		<Block>
+			<!-- MISCELLANEOUS_PASS_THRU -->
+			<String value="MPT"/>
+		</Block>
+		<Block>
+			<!-- MUNICIPAL_BOND -->
+			<String value="MUNI"/>
+		</Block>
+		<Block>
+			<!-- NO_ISITC_SECURITY_TYPE -->
+			<String value="NONE"/>
+		</Block>
+		<Block>
+			<!-- OPTION -->
+			<String value="OPT"/>
+		</Block>
+		<Block>
+			<!-- PREFERRED_STOCK -->
+			<String value="PS"/>
+		</Block>
+		<Block>
+			<!-- REPURCHASE_AGREEMENT -->
+			<String value="RP"/>
+		</Block>
+		<Block>
+			<!-- REVERSE_REPURCHASE_AGREEMENT -->
+			<String value="RVRP"/>
+		</Block>
+		<Block>
+			<!-- STUDENT_LOAN_MARKETING_ASSOCIATION -->
+			<String value="SL"/>
+		</Block>
+		<Block>
+			<!-- TIME_DEPOSIT -->
+			<String value="TD"/>
+		</Block>
+		<Block>
+			<!-- US_TREASURY_BILL -->
+			<String value="USTB"/>
+		</Block>
+		<Block>
+			<!-- WARRANT -->
+			<String value="WAR"/>
+		</Block>
+		<Block>
+			<!-- CATS_TIGERS_LIONS -->
+			<String value="ZOO"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_EffectiveTime" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="168" mutable="false"/>
+	<String name="fieldval" value="##EffectiveTime##"/>
+</DataModel>
+
+<DataModel name="FIELD_StandInstDbType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="169" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##StandInstDbType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- OTHER -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- DTC_SID -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- THOMSON_ALERT -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- A_GLOBAL_CUSTODIAN -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_StandInstDbName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="170" mutable="false"/>
+	<String name="fieldval" value="##StandInstDbName##"/>
+</DataModel>
+
+<DataModel name="FIELD_StandInstDbID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="171" mutable="false"/>
+	<String name="fieldval" value="##StandInstDbID##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlDeliveryType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="172" mutable="false"/>
+	<String name="fieldval" value="##SettlDeliveryType##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlDepositoryCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="173" mutable="false"/>
+	<String name="fieldval" value="##SettlDepositoryCode##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlBrkrCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="174" mutable="false"/>
+	<String name="fieldval" value="##SettlBrkrCode##"/>
+</DataModel>
+
+<DataModel name="FIELD_SettlInstCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="175" mutable="false"/>
+	<String name="fieldval" value="##SettlInstCode##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecuritySettlAgentName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="176" mutable="false"/>
+	<String name="fieldval" value="##SecuritySettlAgentName##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecuritySettlAgentCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="177" mutable="false"/>
+	<String name="fieldval" value="##SecuritySettlAgentCode##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecuritySettlAgentAcctNum" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="178" mutable="false"/>
+	<String name="fieldval" value="##SecuritySettlAgentAcctNum##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecuritySettlAgentAcctName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="179" mutable="false"/>
+	<String name="fieldval" value="##SecuritySettlAgentAcctName##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecuritySettlAgentContactName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="180" mutable="false"/>
+	<String name="fieldval" value="##SecuritySettlAgentContactName##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecuritySettlAgentContactPhone" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="181" mutable="false"/>
+	<String name="fieldval" value="##SecuritySettlAgentContactPhone##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashSettlAgentName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="182" mutable="false"/>
+	<String name="fieldval" value="##CashSettlAgentName##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashSettlAgentCode" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="183" mutable="false"/>
+	<String name="fieldval" value="##CashSettlAgentCode##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashSettlAgentAcctNum" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="184" mutable="false"/>
+	<String name="fieldval" value="##CashSettlAgentAcctNum##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashSettlAgentAcctName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="185" mutable="false"/>
+	<String name="fieldval" value="##CashSettlAgentAcctName##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashSettlAgentContactName" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="186" mutable="false"/>
+	<String name="fieldval" value="##CashSettlAgentContactName##"/>
+</DataModel>
+
+<DataModel name="FIELD_CashSettlAgentContactPhone" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="187" mutable="false"/>
+	<String name="fieldval" value="##CashSettlAgentContactPhone##"/>
+</DataModel>
+
+<DataModel name="FIELD_BidSpotRate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="188" mutable="false"/>
+	<String name="fieldval" value="##BidSpotRate##"/>
+</DataModel>
+
+<DataModel name="FIELD_BidForwardPoints" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="189" mutable="false"/>
+	<String name="fieldval" value="##BidForwardPoints##"/>
+</DataModel>
+
+<DataModel name="FIELD_OfferSpotRate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="190" mutable="false"/>
+	<String name="fieldval" value="##OfferSpotRate##"/>
+</DataModel>
+
+<DataModel name="FIELD_OfferForwardPoints" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="191" mutable="false"/>
+	<String name="fieldval" value="##OfferForwardPoints##"/>
+</DataModel>
+
+<DataModel name="FIELD_OrderQty2" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="192" mutable="false"/>
+	<String name="fieldval" value="##OrderQty2##"/>
+</DataModel>
+
+<DataModel name="FIELD_FutSettDate2" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="193" mutable="false"/>
+	<String name="fieldval" value="##FutSettDate2##"/>
+</DataModel>
+
+<DataModel name="FIELD_LastSpotRate" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="194" mutable="false"/>
+	<String name="fieldval" value="##LastSpotRate##"/>
+</DataModel>
+
+<DataModel name="FIELD_LastForwardPoints" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="195" mutable="false"/>
+	<String name="fieldval" value="##LastForwardPoints##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocLinkID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="196" mutable="false"/>
+	<String name="fieldval" value="##AllocLinkID##"/>
+</DataModel>
+
+<DataModel name="FIELD_AllocLinkType" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="197" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AllocLinkType##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- F_X_NETTING -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- F_X_SWAP -->
+			<String value="1"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_SecondaryOrderID" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="198" mutable="false"/>
+	<String name="fieldval" value="##SecondaryOrderID##"/>
+</DataModel>
+
+<DataModel name="FIELD_NoIOIQualifiers" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="199" mutable="false"/>
+	<String name="fieldval" value="##NoIOIQualifiers##"/>
+</DataModel>
+
+<DataModel name="FIELD_MaturityMonthYear" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="200" mutable="false"/>
+	<String name="fieldval" value="##MaturityMonthYear##"/>
+</DataModel>
+
+<DataModel name="FIELD_PutOrCall" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="201" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##PutOrCall##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- PUT -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- CALL -->
+			<String value="1"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_StrikePrice" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="202" mutable="false"/>
+	<String name="fieldval" value="##StrikePrice##"/>
+</DataModel>
+
+<DataModel name="FIELD_CoveredOrUncovered" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="203" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##CoveredOrUncovered##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- COVERED -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- UNCOVERED -->
+			<String value="1"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_CustomerOrFirm" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="204" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##CustomerOrFirm##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- CUSTOMER -->
+			<String value="0"/>
+		</Block>
+		<Block>
+			<!-- FIRM -->
+			<String value="1"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_MaturityDay" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="205" mutable="false"/>
+	<String name="fieldval" value="##MaturityDay##"/>
+</DataModel>
+
+<DataModel name="FIELD_OptAttribute" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="206" mutable="false"/>
+	<String name="fieldval" value="##OptAttribute##"/>
+</DataModel>
+
+<DataModel name="FIELD_SecurityExchange" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="207" mutable="false"/>
+	<String name="fieldval" value="##SecurityExchange##"/>
+</DataModel>
+
+<DataModel name="FIELD_NotifyBrokerOfCredit" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="208" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##NotifyBrokerOfCredit##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- NO -->
+			<String value="N"/>
+		</Block>
+		<Block>
+			<!-- YES -->
+			<String value="Y"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_AllocHandlInst" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="209" mutable="false"/>
+	<!-- Alternative Declaration: <String name="fieldval" value="##AllocHandlInst##"> -->
+	<Choice name="fieldval">
+		<Block>
+			<!-- MATCH -->
+			<String value="1"/>
+		</Block>
+		<Block>
+			<!-- FORWARD -->
+			<String value="2"/>
+		</Block>
+		<Block>
+			<!-- FORWARD_AND_MATCH -->
+			<String value="3"/>
+		</Block>
+	</Choice>
+</DataModel>
+
+<DataModel name="FIELD_MaxShow" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="210" mutable="false"/>
+	<String name="fieldval" value="##MaxShow##"/>
+</DataModel>
+
+<DataModel name="FIELD_PegDifference" ref="DM_FixFieldDefinition">
+	<String name="fieldnum" value="211" mutable="false"/>
+	<String name="fieldval" value="##PegDifference##"/>
+</DataModel>
+
+</Peach>

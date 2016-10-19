@@ -1,0 +1,1435 @@
+<Peach>
+
+<Include ns="FixFields" src="file:Fields.xml" />
+<Import import="fixfixups" />
+
+<DataModel name="DM_FixHeader_BeginString">
+	<Block name="BeginString" ref="FixFields:FIELD_BeginString"/>
+</DataModel>
+
+<DataModel name="DM_FixHeader_MainBlock">
+		<!-- Skip as Defined in FixHeader BeginString: <Block name="BeginString" ref="FixFields:FIELD_BeginString"/> -->
+		<!-- Skip as Defined in FixHeader BeginString: <Block name="BodyLength" ref="FixFields:FIELD_BodyLength"/> -->
+		<!-- Skip as Defined in Message Definition: <Block name="MsgType" ref="FixFields:FIELD_MsgType"/> -->
+		<Block name="SenderCompID" ref="FixFields:FIELD_SenderCompID"/>
+		<Block name="TargetCompID" ref="FixFields:FIELD_TargetCompID"/>
+		<!-- Optional: <Block name="OnBehalfOfCompID" ref="FixFields:FIELD_OnBehalfOfCompID"/> -->
+		<!-- Optional: <Block name="DeliverToCompID" ref="FixFields:FIELD_DeliverToCompID"/> -->
+		<!-- Optional: <Block name="SecureDataLen" ref="FixFields:FIELD_SecureDataLen"/> -->
+		<!-- Optional: <Block name="SecureData" ref="FixFields:FIELD_SecureData"/> -->
+		<Block name="MsgSeqNum" ref="FixFields:FIELD_MsgSeqNum"/>
+		<!-- Optional: <Block name="SenderSubID" ref="FixFields:FIELD_SenderSubID"/> -->
+		<!-- Optional: <Block name="SenderLocationID" ref="FixFields:FIELD_SenderLocationID"/> -->
+		<!-- Optional: <Block name="TargetSubID" ref="FixFields:FIELD_TargetSubID"/> -->
+		<!-- Optional: <Block name="TargetLocationID" ref="FixFields:FIELD_TargetLocationID"/> -->
+		<!-- Optional: <Block name="OnBehalfOfSubID" ref="FixFields:FIELD_OnBehalfOfSubID"/> -->
+		<!-- Optional: <Block name="OnBehalfOfLocationID" ref="FixFields:FIELD_OnBehalfOfLocationID"/> -->
+		<!-- Optional: <Block name="DeliverToSubID" ref="FixFields:FIELD_DeliverToSubID"/> -->
+		<!-- Optional: <Block name="DeliverToLocationID" ref="FixFields:FIELD_DeliverToLocationID"/> -->
+		<!-- Optional: <Block name="PossDupFlag" ref="FixFields:FIELD_PossDupFlag"/> -->
+		<!-- Optional: <Block name="PossResend" ref="FixFields:FIELD_PossResend"/> -->
+		<Block name="SendingTime" ref="FixFields:FIELD_SendingTime"/>
+		<!-- Optional: <Block name="OrigSendingTime" ref="FixFields:FIELD_OrigSendingTime"/> -->
+</DataModel>
+
+<DataModel name="message_Heartbeat">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Heartbeat"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="0"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="TestReqID" ref="FixFields:FIELD_TestReqID"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Heartbeat"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_TestRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_TestRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="1"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="TestReqID" ref="FixFields:FIELD_TestReqID"/>
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_TestRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_ResendRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ResendRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="2"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="BeginSeqNo" ref="FixFields:FIELD_BeginSeqNo"/>
+			<Block name="EndSeqNo" ref="FixFields:FIELD_EndSeqNo"/>
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ResendRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Reject">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Reject"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="3"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="RefSeqNum" ref="FixFields:FIELD_RefSeqNum"/>
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Reject"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_SequenceReset">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_SequenceReset"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="4"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="GapFillFlag" ref="FixFields:FIELD_GapFillFlag"/> -->
+			<Block name="NewSeqNo" ref="FixFields:FIELD_NewSeqNo"/>
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_SequenceReset"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Logout">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Logout"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="5"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Logout"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_IOI">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_IOI"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="6"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="IOIid" ref="FixFields:FIELD_IOIid"/>
+			<Block name="IOITransType" ref="FixFields:FIELD_IOITransType"/>
+			<!-- Optional: <Block name="IOIRefID" ref="FixFields:FIELD_IOIRefID"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<Block name="IOIShares" ref="FixFields:FIELD_IOIShares"/>
+			<!-- Optional: <Block name="Price" ref="FixFields:FIELD_Price"/> -->
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="ValidUntilTime" ref="FixFields:FIELD_ValidUntilTime"/> -->
+			<!-- Optional: <Block name="IOIQltyInd" ref="FixFields:FIELD_IOIQltyInd"/> -->
+			<!-- Optional: <Block name="IOIOthSvc" ref="FixFields:FIELD_IOIOthSvc"/> -->
+			<!-- Optional: <Block name="IOINaturalFlag" ref="FixFields:FIELD_IOINaturalFlag"/> -->
+			<!-- Optional: <Block name="IOIQualifier" ref="FixFields:FIELD_IOIQualifier"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+			<!-- Optional: <Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/> -->
+			<!-- Optional: <Block name="URLLink" ref="FixFields:FIELD_URLLink"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_IOI"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Advertisement">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Advertisement"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="7"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="AdvId" ref="FixFields:FIELD_AdvId"/>
+			<Block name="AdvTransType" ref="FixFields:FIELD_AdvTransType"/>
+			<!-- Optional: <Block name="AdvRefID" ref="FixFields:FIELD_AdvRefID"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="AdvSide" ref="FixFields:FIELD_AdvSide"/>
+			<Block name="Shares" ref="FixFields:FIELD_Shares"/>
+			<!-- Optional: <Block name="Price" ref="FixFields:FIELD_Price"/> -->
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="TradeDate" ref="FixFields:FIELD_TradeDate"/> -->
+			<!-- Optional: <Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+			<!-- Optional: <Block name="URLLink" ref="FixFields:FIELD_URLLink"/> -->
+			<!-- Optional: <Block name="LastMkt" ref="FixFields:FIELD_LastMkt"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Advertisement"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_ExecutionReport">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ExecutionReport"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="8"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="OrderID" ref="FixFields:FIELD_OrderID"/>
+			<!-- Optional: <Block name="SecondaryOrderID" ref="FixFields:FIELD_SecondaryOrderID"/> -->
+			<!-- Optional: <Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/> -->
+			<!-- Optional: <Block name="OrigClOrdID" ref="FixFields:FIELD_OrigClOrdID"/> -->
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<!-- Optional: <Block name="ListID" ref="FixFields:FIELD_ListID"/> -->
+			<Block name="ExecID" ref="FixFields:FIELD_ExecID"/>
+			<Block name="ExecTransType" ref="FixFields:FIELD_ExecTransType"/>
+			<!-- Optional: <Block name="ExecRefID" ref="FixFields:FIELD_ExecRefID"/> -->
+			<Block name="ExecType" ref="FixFields:FIELD_ExecType"/>
+			<Block name="OrdStatus" ref="FixFields:FIELD_OrdStatus"/>
+			<!-- Optional: <Block name="OrdRejReason" ref="FixFields:FIELD_OrdRejReason"/> -->
+			<!-- Optional: <Block name="Account" ref="FixFields:FIELD_Account"/> -->
+			<!-- Optional: <Block name="SettlmntTyp" ref="FixFields:FIELD_SettlmntTyp"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/>
+			<!-- Optional: <Block name="OrdType" ref="FixFields:FIELD_OrdType"/> -->
+			<!-- Optional: <Block name="Price" ref="FixFields:FIELD_Price"/> -->
+			<!-- Optional: <Block name="StopPx" ref="FixFields:FIELD_StopPx"/> -->
+			<!-- Optional: <Block name="PegDifference" ref="FixFields:FIELD_PegDifference"/> -->
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="TimeInForce" ref="FixFields:FIELD_TimeInForce"/> -->
+			<!-- Optional: <Block name="ExpireTime" ref="FixFields:FIELD_ExpireTime"/> -->
+			<!-- Optional: <Block name="ExecInst" ref="FixFields:FIELD_ExecInst"/> -->
+			<!-- Optional: <Block name="Rule80A" ref="FixFields:FIELD_Rule80A"/> -->
+			<Block name="LastShares" ref="FixFields:FIELD_LastShares"/>
+			<Block name="LastPx" ref="FixFields:FIELD_LastPx"/>
+			<!-- Optional: <Block name="LastSpotRate" ref="FixFields:FIELD_LastSpotRate"/> -->
+			<!-- Optional: <Block name="LastForwardPoints" ref="FixFields:FIELD_LastForwardPoints"/> -->
+			<!-- Optional: <Block name="LastMkt" ref="FixFields:FIELD_LastMkt"/> -->
+			<!-- Optional: <Block name="LastCapacity" ref="FixFields:FIELD_LastCapacity"/> -->
+			<Block name="LeavesQty" ref="FixFields:FIELD_LeavesQty"/>
+			<Block name="CumQty" ref="FixFields:FIELD_CumQty"/>
+			<Block name="AvgPx" ref="FixFields:FIELD_AvgPx"/>
+			<!-- Optional: <Block name="TradeDate" ref="FixFields:FIELD_TradeDate"/> -->
+			<!-- Optional: <Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/> -->
+			<!-- Optional: <Block name="ReportToExch" ref="FixFields:FIELD_ReportToExch"/> -->
+			<!-- Optional: <Block name="Commission" ref="FixFields:FIELD_Commission"/> -->
+			<!-- Optional: <Block name="CommType" ref="FixFields:FIELD_CommType"/> -->
+			<!-- Optional: <Block name="SettlCurrAmt" ref="FixFields:FIELD_SettlCurrAmt"/> -->
+			<!-- Optional: <Block name="SettlCurrency" ref="FixFields:FIELD_SettlCurrency"/> -->
+			<!-- Optional: <Block name="SettlCurrFxRate" ref="FixFields:FIELD_SettlCurrFxRate"/> -->
+			<!-- Optional: <Block name="SettlCurrFxRateCalc" ref="FixFields:FIELD_SettlCurrFxRateCalc"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ExecutionReport"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_OrderCancelReject">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderCancelReject"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="9"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="OrderID" ref="FixFields:FIELD_OrderID"/>
+			<!-- Optional: <Block name="SecondaryOrderID" ref="FixFields:FIELD_SecondaryOrderID"/> -->
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<Block name="OrigClOrdID" ref="FixFields:FIELD_OrigClOrdID"/>
+			<Block name="OrdStatus" ref="FixFields:FIELD_OrdStatus"/>
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<!-- Optional: <Block name="ListID" ref="FixFields:FIELD_ListID"/> -->
+			<!-- Optional: <Block name="CxlRejReason" ref="FixFields:FIELD_CxlRejReason"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderCancelReject"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Logon">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Logon"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="A"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="EncryptMethod" ref="FixFields:FIELD_EncryptMethod"/>
+			<Block name="HeartBtInt" ref="FixFields:FIELD_HeartBtInt"/>
+			<!-- Optional: <Block name="RawDataLength" ref="FixFields:FIELD_RawDataLength"/> -->
+			<!-- Optional: <Block name="RawData" ref="FixFields:FIELD_RawData"/> -->
+			<!-- Optional: <Block name="ResetSeqNumFlag" ref="FixFields:FIELD_ResetSeqNumFlag"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Logon"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_News">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_News"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="B"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="OrigTime" ref="FixFields:FIELD_OrigTime"/> -->
+			<!-- Optional: <Block name="Urgency" ref="FixFields:FIELD_Urgency"/> -->
+			<Block name="Headline" ref="FixFields:FIELD_Headline"/>
+			<!-- Optional: <Block name="RelatdSym" ref="FixFields:FIELD_RelatdSym"/> -->
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Text" ref="FixFields:FIELD_Text"/>
+			<!-- Optional: <Block name="URLLink" ref="FixFields:FIELD_URLLink"/> -->
+			<!-- Optional: <Block name="RawDataLength" ref="FixFields:FIELD_RawDataLength"/> -->
+			<!-- Optional: <Block name="RawData" ref="FixFields:FIELD_RawData"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_News"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Email">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Email"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="C"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="EmailThreadID" ref="FixFields:FIELD_EmailThreadID"/>
+			<Block name="EmailType" ref="FixFields:FIELD_EmailType"/>
+			<!-- Optional: <Block name="OrigTime" ref="FixFields:FIELD_OrigTime"/> -->
+			<Block name="Subject" ref="FixFields:FIELD_Subject"/>
+			<!-- Optional: <Block name="RelatdSym" ref="FixFields:FIELD_RelatdSym"/> -->
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<!-- Optional: <Block name="OrderID" ref="FixFields:FIELD_OrderID"/> -->
+			<!-- Optional: <Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/> -->
+			<Block name="Text" ref="FixFields:FIELD_Text"/>
+			<!-- Optional: <Block name="RawDataLength" ref="FixFields:FIELD_RawDataLength"/> -->
+			<!-- Optional: <Block name="RawData" ref="FixFields:FIELD_RawData"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Email"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_NewOrderSingle">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+ 			<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_NewOrderSingle"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+			</String>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="D"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<!-- Optional: <Block name="Account" ref="FixFields:FIELD_Account"/> -->
+			<!-- Optional: <Block name="SettlmntTyp" ref="FixFields:FIELD_SettlmntTyp"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<Block name="HandlInst" ref="FixFields:FIELD_HandlInst"/>
+			<!-- Optional: <Block name="ExecInst" ref="FixFields:FIELD_ExecInst"/> -->
+			<!-- Optional: <Block name="MinQty" ref="FixFields:FIELD_MinQty"/> -->
+			<!-- Optional: <Block name="MaxFloor" ref="FixFields:FIELD_MaxFloor"/> -->
+			<!-- Optional: <Block name="ExDestination" ref="FixFields:FIELD_ExDestination"/> -->
+			<!-- Optional: <Block name="ProcessCode" ref="FixFields:FIELD_ProcessCode"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<!-- Optional: <Block name="PrevClosePx" ref="FixFields:FIELD_PrevClosePx"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<!-- Optional: <Block name="LocateReqd" ref="FixFields:FIELD_LocateReqd"/> -->
+			<!-- Optional: <Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/> -->
+			<!-- Optional: <Block name="CashOrderQty" ref="FixFields:FIELD_CashOrderQty"/> -->
+			<Block name="OrdType" ref="FixFields:FIELD_OrdType"/>
+			<!-- Optional: <Block name="Price" ref="FixFields:FIELD_Price"/> -->
+			<!-- Optional: <Block name="StopPx" ref="FixFields:FIELD_StopPx"/> -->
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="IOIid" ref="FixFields:FIELD_IOIid"/> -->
+			<!-- Optional: <Block name="QuoteID" ref="FixFields:FIELD_QuoteID"/> -->
+			<!-- Optional: <Block name="TimeInForce" ref="FixFields:FIELD_TimeInForce"/> -->
+			<!-- Optional: <Block name="ExpireTime" ref="FixFields:FIELD_ExpireTime"/> -->
+			<!-- Optional: <Block name="Commission" ref="FixFields:FIELD_Commission"/> -->
+			<!-- Optional: <Block name="CommType" ref="FixFields:FIELD_CommType"/> -->
+			<!-- Optional: <Block name="Rule80A" ref="FixFields:FIELD_Rule80A"/> -->
+			<!-- Optional: <Block name="ForexReq" ref="FixFields:FIELD_ForexReq"/> -->
+			<!-- Optional: <Block name="SettlCurrency" ref="FixFields:FIELD_SettlCurrency"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+			<!-- Optional: <Block name="FutSettDate2" ref="FixFields:FIELD_FutSettDate2"/> -->
+			<!-- Optional: <Block name="OrderQty2" ref="FixFields:FIELD_OrderQty2"/> -->
+			<!-- Optional: <Block name="OpenClose" ref="FixFields:FIELD_OpenClose"/> -->
+			<!-- Optional: <Block name="CoveredOrUncovered" ref="FixFields:FIELD_CoveredOrUncovered"/> -->
+			<!-- Optional: <Block name="CustomerOrFirm" ref="FixFields:FIELD_CustomerOrFirm"/> -->
+			<!-- Optional: <Block name="MaxShow" ref="FixFields:FIELD_MaxShow"/> -->
+			<!-- Optional: <Block name="PegDifference" ref="FixFields:FIELD_PegDifference"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_NewOrderSingle"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_NewOrderList">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_NewOrderList"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="E"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="ListID" ref="FixFields:FIELD_ListID"/>
+			<!-- Optional: <Block name="WaveNo" ref="FixFields:FIELD_WaveNo"/> -->
+			<Block name="ListSeqNo" ref="FixFields:FIELD_ListSeqNo"/>
+			<Block name="ListNoOrds" ref="FixFields:FIELD_ListNoOrds"/>
+			<!-- Optional: <Block name="ListExecInst" ref="FixFields:FIELD_ListExecInst"/> -->
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<!-- Optional: <Block name="Account" ref="FixFields:FIELD_Account"/> -->
+			<!-- Optional: <Block name="SettlmntTyp" ref="FixFields:FIELD_SettlmntTyp"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<Block name="HandlInst" ref="FixFields:FIELD_HandlInst"/>
+			<!-- Optional: <Block name="ExecInst" ref="FixFields:FIELD_ExecInst"/> -->
+			<!-- Optional: <Block name="MinQty" ref="FixFields:FIELD_MinQty"/> -->
+			<!-- Optional: <Block name="MaxFloor" ref="FixFields:FIELD_MaxFloor"/> -->
+			<!-- Optional: <Block name="ExDestination" ref="FixFields:FIELD_ExDestination"/> -->
+			<!-- Optional: <Block name="ProcessCode" ref="FixFields:FIELD_ProcessCode"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<!-- Optional: <Block name="PrevClosePx" ref="FixFields:FIELD_PrevClosePx"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<!-- Optional: <Block name="LocateReqd" ref="FixFields:FIELD_LocateReqd"/> -->
+			<Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/>
+			<Block name="OrdType" ref="FixFields:FIELD_OrdType"/>
+			<!-- Optional: <Block name="Price" ref="FixFields:FIELD_Price"/> -->
+			<!-- Optional: <Block name="StopPx" ref="FixFields:FIELD_StopPx"/> -->
+			<!-- Optional: <Block name="PegDifference" ref="FixFields:FIELD_PegDifference"/> -->
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="TimeInForce" ref="FixFields:FIELD_TimeInForce"/> -->
+			<!-- Optional: <Block name="ExpireTime" ref="FixFields:FIELD_ExpireTime"/> -->
+			<!-- Optional: <Block name="Commission" ref="FixFields:FIELD_Commission"/> -->
+			<!-- Optional: <Block name="CommType" ref="FixFields:FIELD_CommType"/> -->
+			<!-- Optional: <Block name="Rule80A" ref="FixFields:FIELD_Rule80A"/> -->
+			<!-- Optional: <Block name="ForexReq" ref="FixFields:FIELD_ForexReq"/> -->
+			<!-- Optional: <Block name="SettlCurrency" ref="FixFields:FIELD_SettlCurrency"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+			<!-- Optional: <Block name="FutSettDate2" ref="FixFields:FIELD_FutSettDate2"/> -->
+			<!-- Optional: <Block name="OrderQty2" ref="FixFields:FIELD_OrderQty2"/> -->
+			<!-- Optional: <Block name="OpenClose" ref="FixFields:FIELD_OpenClose"/> -->
+			<!-- Optional: <Block name="CoveredOrUncovered" ref="FixFields:FIELD_CoveredOrUncovered"/> -->
+			<!-- Optional: <Block name="CustomerOrFirm" ref="FixFields:FIELD_CustomerOrFirm"/> -->
+			<!-- Optional: <Block name="MaxShow" ref="FixFields:FIELD_MaxShow"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_NewOrderList"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_OrderCancelRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderCancelRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="F"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="OrigClOrdID" ref="FixFields:FIELD_OrigClOrdID"/>
+			<!-- Optional: <Block name="OrderID" ref="FixFields:FIELD_OrderID"/> -->
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<!-- Optional: <Block name="ListID" ref="FixFields:FIELD_ListID"/> -->
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<!-- Optional: <Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/> -->
+			<!-- Optional: <Block name="CashOrderQty" ref="FixFields:FIELD_CashOrderQty"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderCancelRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_OrderCancelReplaceRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderCancelReplaceRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="G"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="OrderID" ref="FixFields:FIELD_OrderID"/> -->
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<Block name="OrigClOrdID" ref="FixFields:FIELD_OrigClOrdID"/>
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<!-- Optional: <Block name="ListID" ref="FixFields:FIELD_ListID"/> -->
+			<!-- Optional: <Block name="Account" ref="FixFields:FIELD_Account"/> -->
+			<!-- Optional: <Block name="SettlmntTyp" ref="FixFields:FIELD_SettlmntTyp"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<Block name="HandlInst" ref="FixFields:FIELD_HandlInst"/>
+			<!-- Optional: <Block name="ExecInst" ref="FixFields:FIELD_ExecInst"/> -->
+			<!-- Optional: <Block name="MinQty" ref="FixFields:FIELD_MinQty"/> -->
+			<!-- Optional: <Block name="MaxFloor" ref="FixFields:FIELD_MaxFloor"/> -->
+			<!-- Optional: <Block name="ExDestination" ref="FixFields:FIELD_ExDestination"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<!-- Optional: <Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/> -->
+			<!-- Optional: <Block name="CashOrderQty" ref="FixFields:FIELD_CashOrderQty"/> -->
+			<Block name="OrdType" ref="FixFields:FIELD_OrdType"/>
+			<!-- Optional: <Block name="Price" ref="FixFields:FIELD_Price"/> -->
+			<!-- Optional: <Block name="StopPx" ref="FixFields:FIELD_StopPx"/> -->
+			<!-- Optional: <Block name="PegDifference" ref="FixFields:FIELD_PegDifference"/> -->
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="TimeInForce" ref="FixFields:FIELD_TimeInForce"/> -->
+			<!-- Optional: <Block name="ExpireTime" ref="FixFields:FIELD_ExpireTime"/> -->
+			<!-- Optional: <Block name="Commission" ref="FixFields:FIELD_Commission"/> -->
+			<!-- Optional: <Block name="CommType" ref="FixFields:FIELD_CommType"/> -->
+			<!-- Optional: <Block name="Rule80A" ref="FixFields:FIELD_Rule80A"/> -->
+			<!-- Optional: <Block name="ForexReq" ref="FixFields:FIELD_ForexReq"/> -->
+			<!-- Optional: <Block name="SettlCurrency" ref="FixFields:FIELD_SettlCurrency"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+			<!-- Optional: <Block name="FutSettDate2" ref="FixFields:FIELD_FutSettDate2"/> -->
+			<!-- Optional: <Block name="OrderQty2" ref="FixFields:FIELD_OrderQty2"/> -->
+			<!-- Optional: <Block name="OpenClose" ref="FixFields:FIELD_OpenClose"/> -->
+			<!-- Optional: <Block name="CoveredOrUncovered" ref="FixFields:FIELD_CoveredOrUncovered"/> -->
+			<!-- Optional: <Block name="CustomerOrFirm" ref="FixFields:FIELD_CustomerOrFirm"/> -->
+			<!-- Optional: <Block name="MaxShow" ref="FixFields:FIELD_MaxShow"/> -->
+			<!-- Optional: <Block name="LocateReqd" ref="FixFields:FIELD_LocateReqd"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderCancelReplaceRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_OrderStatusRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderStatusRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="H"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="OrderID" ref="FixFields:FIELD_OrderID"/> -->
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_OrderStatusRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Allocation">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Allocation"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="J"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="AllocID" ref="FixFields:FIELD_AllocID"/>
+			<Block name="AllocTransType" ref="FixFields:FIELD_AllocTransType"/>
+			<!-- Optional: <Block name="RefAllocID" ref="FixFields:FIELD_RefAllocID"/> -->
+			<!-- Optional: <Block name="AllocLinkID" ref="FixFields:FIELD_AllocLinkID"/> -->
+			<!-- Optional: <Block name="AllocLinkType" ref="FixFields:FIELD_AllocLinkType"/> -->
+			<!-- Optional: <Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/> -->
+			<!-- Optional: <Block name="OrderID" ref="FixFields:FIELD_OrderID"/> -->
+			<!-- Optional: <Block name="SecondaryOrderID" ref="FixFields:FIELD_SecondaryOrderID"/> -->
+			<!-- Optional: <Block name="ListID" ref="FixFields:FIELD_ListID"/> -->
+			<!-- Optional: <Block name="WaveNo" ref="FixFields:FIELD_WaveNo"/> -->
+			<!-- Optional: <Block name="LastShares" ref="FixFields:FIELD_LastShares"/> -->
+			<!-- Optional: <Block name="ExecID" ref="FixFields:FIELD_ExecID"/> -->
+			<!-- Optional: <Block name="LastPx" ref="FixFields:FIELD_LastPx"/> -->
+			<!-- Optional: <Block name="LastCapacity" ref="FixFields:FIELD_LastCapacity"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Shares" ref="FixFields:FIELD_Shares"/>
+			<!-- Optional: <Block name="LastMkt" ref="FixFields:FIELD_LastMkt"/> -->
+			<Block name="AvgPx" ref="FixFields:FIELD_AvgPx"/>
+			<!-- Optional: <Block name="Currency" ref="FixFields:FIELD_Currency"/> -->
+			<!-- Optional: <Block name="AvgPrxPrecision" ref="FixFields:FIELD_AvgPrxPrecision"/> -->
+			<Block name="TradeDate" ref="FixFields:FIELD_TradeDate"/>
+			<!-- Optional: <Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/> -->
+			<!-- Optional: <Block name="SettlmntTyp" ref="FixFields:FIELD_SettlmntTyp"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<!-- Optional: <Block name="NetMoney" ref="FixFields:FIELD_NetMoney"/> -->
+			<!-- Optional: <Block name="OpenClose" ref="FixFields:FIELD_OpenClose"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+			<!-- Optional: <Block name="NumDaysInterest" ref="FixFields:FIELD_NumDaysInterest"/> -->
+			<!-- Optional: <Block name="AccruedInterestRate" ref="FixFields:FIELD_AccruedInterestRate"/> -->
+			<!-- Optional: <Block name="AllocAccount" ref="FixFields:FIELD_AllocAccount"/> -->
+			<Block name="AllocShares" ref="FixFields:FIELD_AllocShares"/>
+			<!-- Optional: <Block name="ProcessCode" ref="FixFields:FIELD_ProcessCode"/> -->
+			<!-- Optional: <Block name="BrokerOfCredit" ref="FixFields:FIELD_BrokerOfCredit"/> -->
+			<!-- Optional: <Block name="NotifyBrokerOfCredit" ref="FixFields:FIELD_NotifyBrokerOfCredit"/> -->
+			<!-- Optional: <Block name="AllocHandlInst" ref="FixFields:FIELD_AllocHandlInst"/> -->
+			<!-- Optional: <Block name="AllocText" ref="FixFields:FIELD_AllocText"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="Commission" ref="FixFields:FIELD_Commission"/> -->
+			<!-- Optional: <Block name="CommType" ref="FixFields:FIELD_CommType"/> -->
+			<!-- Optional: <Block name="AllocAvgPx" ref="FixFields:FIELD_AllocAvgPx"/> -->
+			<!-- Optional: <Block name="AllocNetMoney" ref="FixFields:FIELD_AllocNetMoney"/> -->
+			<!-- Optional: <Block name="SettlCurrAmt" ref="FixFields:FIELD_SettlCurrAmt"/> -->
+			<!-- Optional: <Block name="SettlCurrency" ref="FixFields:FIELD_SettlCurrency"/> -->
+			<!-- Optional: <Block name="SettlCurrFxRate" ref="FixFields:FIELD_SettlCurrFxRate"/> -->
+			<!-- Optional: <Block name="SettlCurrFxRateCalc" ref="FixFields:FIELD_SettlCurrFxRateCalc"/> -->
+			<!-- Optional: <Block name="AccruedInterestAmt" ref="FixFields:FIELD_AccruedInterestAmt"/> -->
+			<!-- Optional: <Block name="SettlInstMode" ref="FixFields:FIELD_SettlInstMode"/> -->
+			<!-- Optional: <Block name="MiscFeeAmt" ref="FixFields:FIELD_MiscFeeAmt"/> -->
+			<!-- Optional: <Block name="MiscFeeCurr" ref="FixFields:FIELD_MiscFeeCurr"/> -->
+			<!-- Optional: <Block name="MiscFeeType" ref="FixFields:FIELD_MiscFeeType"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Allocation"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_ListCancelRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListCancelRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="K"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="ListID" ref="FixFields:FIELD_ListID"/>
+			<!-- Optional: <Block name="WaveNo" ref="FixFields:FIELD_WaveNo"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListCancelRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_ListExecute">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListExecute"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="L"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="ListID" ref="FixFields:FIELD_ListID"/>
+			<!-- Optional: <Block name="WaveNo" ref="FixFields:FIELD_WaveNo"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListExecute"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_ListStatusRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListStatusRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="M"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="ListID" ref="FixFields:FIELD_ListID"/>
+			<!-- Optional: <Block name="WaveNo" ref="FixFields:FIELD_WaveNo"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListStatusRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_ListStatus">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListStatus"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="N"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="ListID" ref="FixFields:FIELD_ListID"/>
+			<!-- Optional: <Block name="WaveNo" ref="FixFields:FIELD_WaveNo"/> -->
+			<Block name="NoRpts" ref="FixFields:FIELD_NoRpts"/>
+			<Block name="RptSeq" ref="FixFields:FIELD_RptSeq"/>
+			<Block name="ClOrdID" ref="FixFields:FIELD_ClOrdID"/>
+			<Block name="CumQty" ref="FixFields:FIELD_CumQty"/>
+			<Block name="LeavesQty" ref="FixFields:FIELD_LeavesQty"/>
+			<Block name="CxlQty" ref="FixFields:FIELD_CxlQty"/>
+			<Block name="AvgPx" ref="FixFields:FIELD_AvgPx"/>
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_ListStatus"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_AllocationInstructionAck">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_AllocationInstructionAck"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="P"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<Block name="AllocID" ref="FixFields:FIELD_AllocID"/>
+			<Block name="TradeDate" ref="FixFields:FIELD_TradeDate"/>
+			<!-- Optional: <Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/> -->
+			<Block name="AllocStatus" ref="FixFields:FIELD_AllocStatus"/>
+			<!-- Optional: <Block name="AllocRejCode" ref="FixFields:FIELD_AllocRejCode"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_AllocationInstructionAck"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_DontKnowTrade">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_DontKnowTrade"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="Q"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="OrderID" ref="FixFields:FIELD_OrderID"/> -->
+			<!-- Optional: <Block name="ExecID" ref="FixFields:FIELD_ExecID"/> -->
+			<Block name="DKReason" ref="FixFields:FIELD_DKReason"/>
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<Block name="Side" ref="FixFields:FIELD_Side"/>
+			<!-- Optional: <Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/> -->
+			<!-- Optional: <Block name="CashOrderQty" ref="FixFields:FIELD_CashOrderQty"/> -->
+			<!-- Optional: <Block name="LastShares" ref="FixFields:FIELD_LastShares"/> -->
+			<!-- Optional: <Block name="LastPx" ref="FixFields:FIELD_LastPx"/> -->
+			<!-- Optional: <Block name="Text" ref="FixFields:FIELD_Text"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_DontKnowTrade"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_QuoteRequest">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_QuoteRequest"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="R"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="QuoteReqID" ref="FixFields:FIELD_QuoteReqID"/>
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<!-- Optional: <Block name="PrevClosePx" ref="FixFields:FIELD_PrevClosePx"/> -->
+			<!-- Optional: <Block name="Side" ref="FixFields:FIELD_Side"/> -->
+			<!-- Optional: <Block name="OrderQty" ref="FixFields:FIELD_OrderQty"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<!-- Optional: <Block name="OrdType" ref="FixFields:FIELD_OrdType"/> -->
+			<!-- Optional: <Block name="FutSettDate2" ref="FixFields:FIELD_FutSettDate2"/> -->
+			<!-- Optional: <Block name="OrderQty2" ref="FixFields:FIELD_OrderQty2"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_QuoteRequest"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_Quote">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Quote"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="S"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<!-- Optional: <Block name="QuoteReqID" ref="FixFields:FIELD_QuoteReqID"/> -->
+			<Block name="QuoteID" ref="FixFields:FIELD_QuoteID"/>
+			<Block name="Symbol" ref="FixFields:FIELD_Symbol"/>
+			<!-- Optional: <Block name="SymbolSfx" ref="FixFields:FIELD_SymbolSfx"/> -->
+			<!-- Optional: <Block name="SecurityID" ref="FixFields:FIELD_SecurityID"/> -->
+			<!-- Optional: <Block name="IDSource" ref="FixFields:FIELD_IDSource"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="MaturityMonthYear" ref="FixFields:FIELD_MaturityMonthYear"/> -->
+			<!-- Optional: <Block name="MaturityDay" ref="FixFields:FIELD_MaturityDay"/> -->
+			<!-- Optional: <Block name="PutOrCall" ref="FixFields:FIELD_PutOrCall"/> -->
+			<!-- Optional: <Block name="StrikePrice" ref="FixFields:FIELD_StrikePrice"/> -->
+			<!-- Optional: <Block name="OptAttribute" ref="FixFields:FIELD_OptAttribute"/> -->
+			<!-- Optional: <Block name="SecurityExchange" ref="FixFields:FIELD_SecurityExchange"/> -->
+			<!-- Optional: <Block name="Issuer" ref="FixFields:FIELD_Issuer"/> -->
+			<!-- Optional: <Block name="SecurityDesc" ref="FixFields:FIELD_SecurityDesc"/> -->
+			<!-- Optional: <Block name="BidPx" ref="FixFields:FIELD_BidPx"/> -->
+			<!-- Optional: <Block name="OfferPx" ref="FixFields:FIELD_OfferPx"/> -->
+			<!-- Optional: <Block name="BidSize" ref="FixFields:FIELD_BidSize"/> -->
+			<!-- Optional: <Block name="OfferSize" ref="FixFields:FIELD_OfferSize"/> -->
+			<!-- Optional: <Block name="ValidUntilTime" ref="FixFields:FIELD_ValidUntilTime"/> -->
+			<!-- Optional: <Block name="BidSpotRate" ref="FixFields:FIELD_BidSpotRate"/> -->
+			<!-- Optional: <Block name="OfferSpotRate" ref="FixFields:FIELD_OfferSpotRate"/> -->
+			<!-- Optional: <Block name="BidForwardPoints" ref="FixFields:FIELD_BidForwardPoints"/> -->
+			<!-- Optional: <Block name="OfferForwardPoints" ref="FixFields:FIELD_OfferForwardPoints"/> -->
+			<!-- Optional: <Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/> -->
+			<!-- Optional: <Block name="FutSettDate" ref="FixFields:FIELD_FutSettDate"/> -->
+			<!-- Optional: <Block name="OrdType" ref="FixFields:FIELD_OrdType"/> -->
+			<!-- Optional: <Block name="FutSettDate2" ref="FixFields:FIELD_FutSettDate2"/> -->
+			<!-- Optional: <Block name="OrderQty2" ref="FixFields:FIELD_OrderQty2"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_Quote"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<DataModel name="message_SettlementInstructions">
+	<Block name="FixHeader">
+		<Block name="BeginString" ref="DM_FixHeader_BeginString"/>
+		<Block name="Length" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="9"/>
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_SettlementInstructions"/>
+				<Param name="expression" value="fixfixups.fixlen(data)"/>
+			</Fixup>
+		</Block>
+		<Block name="MsgType" ref="FixFields:DM_FixFieldDefinition">
+			<String name="fieldnum" value="35"/>
+			<String name="fieldval" value="T"/>
+		</Block>
+		<Block name="Header" ref="DM_FixHeader_MainBlock"/>
+	</Block>
+	<Block name="Body">
+			<Block name="SettlInstID" ref="FixFields:FIELD_SettlInstID"/>
+			<Block name="SettlInstTransType" ref="FixFields:FIELD_SettlInstTransType"/>
+			<Block name="SettlInstMode" ref="FixFields:FIELD_SettlInstMode"/>
+			<Block name="SettlInstSource" ref="FixFields:FIELD_SettlInstSource"/>
+			<Block name="AllocAccount" ref="FixFields:FIELD_AllocAccount"/>
+			<!-- Optional: <Block name="SettlLocation" ref="FixFields:FIELD_SettlLocation"/> -->
+			<!-- Optional: <Block name="TradeDate" ref="FixFields:FIELD_TradeDate"/> -->
+			<!-- Optional: <Block name="AllocID" ref="FixFields:FIELD_AllocID"/> -->
+			<!-- Optional: <Block name="LastMkt" ref="FixFields:FIELD_LastMkt"/> -->
+			<!-- Optional: <Block name="Side" ref="FixFields:FIELD_Side"/> -->
+			<!-- Optional: <Block name="SecurityType" ref="FixFields:FIELD_SecurityType"/> -->
+			<!-- Optional: <Block name="EffectiveTime" ref="FixFields:FIELD_EffectiveTime"/> -->
+			<Block name="TransactTime" ref="FixFields:FIELD_TransactTime"/>
+			<!-- Optional: <Block name="ClientID" ref="FixFields:FIELD_ClientID"/> -->
+			<!-- Optional: <Block name="ExecBroker" ref="FixFields:FIELD_ExecBroker"/> -->
+			<!-- Optional: <Block name="StandInstDbType" ref="FixFields:FIELD_StandInstDbType"/> -->
+			<!-- Optional: <Block name="StandInstDbName" ref="FixFields:FIELD_StandInstDbName"/> -->
+			<!-- Optional: <Block name="StandInstDbID" ref="FixFields:FIELD_StandInstDbID"/> -->
+			<!-- Optional: <Block name="SettlDeliveryType" ref="FixFields:FIELD_SettlDeliveryType"/> -->
+			<!-- Optional: <Block name="SettlDepositoryCode" ref="FixFields:FIELD_SettlDepositoryCode"/> -->
+			<!-- Optional: <Block name="SettlBrkrCode" ref="FixFields:FIELD_SettlBrkrCode"/> -->
+			<!-- Optional: <Block name="SettlInstCode" ref="FixFields:FIELD_SettlInstCode"/> -->
+			<!-- Optional: <Block name="SecuritySettlAgentName" ref="FixFields:FIELD_SecuritySettlAgentName"/> -->
+			<!-- Optional: <Block name="SecuritySettlAgentCode" ref="FixFields:FIELD_SecuritySettlAgentCode"/> -->
+			<!-- Optional: <Block name="SecuritySettlAgentAcctNum" ref="FixFields:FIELD_SecuritySettlAgentAcctNum"/> -->
+			<!-- Optional: <Block name="SecuritySettlAgentAcctName" ref="FixFields:FIELD_SecuritySettlAgentAcctName"/> -->
+			<!-- Optional: <Block name="SecuritySettlAgentContactName" ref="FixFields:FIELD_SecuritySettlAgentContactName"/> -->
+			<!-- Optional: <Block name="SecuritySettlAgentContactPhone" ref="FixFields:FIELD_SecuritySettlAgentContactPhone"/> -->
+			<!-- Optional: <Block name="CashSettlAgentName" ref="FixFields:FIELD_CashSettlAgentName"/> -->
+			<!-- Optional: <Block name="CashSettlAgentCode" ref="FixFields:FIELD_CashSettlAgentCode"/> -->
+			<!-- Optional: <Block name="CashSettlAgentAcctNum" ref="FixFields:FIELD_CashSettlAgentAcctNum"/> -->
+			<!-- Optional: <Block name="CashSettlAgentAcctName" ref="FixFields:FIELD_CashSettlAgentAcctName"/> -->
+			<!-- Optional: <Block name="CashSettlAgentContactName" ref="FixFields:FIELD_CashSettlAgentContactName"/> -->
+			<!-- Optional: <Block name="CashSettlAgentContactPhone" ref="FixFields:FIELD_CashSettlAgentContactPhone"/> -->
+	</Block>
+	<Block name="FixMessageTail" ref="FixFields:DM_FixFieldDefinition">
+		<String name="fieldnum" value="10"/>
+ 		<String name="fieldval">
+			<Fixup class="ExpressionFixup">
+				<Param name="ref" value="message_SettlementInstructions"/>
+				<Param name="expression" value="fixfixups.fixchecksum(data)"/>
+			</Fixup>
+		</String>
+	</Block>
+</DataModel>
+
+<StateModel name="TheState" initialState="initial">
+  <State name="initial">
+    <Action type="output">
+      <DataModel ref="message_NewOrderSingle" />
+    </Action>
+  </State>
+</StateModel>
+
+<Test name="Default">
+  <!-- ... -->
+  <StateModel ref="TheState" />
+
+  <Publisher class="File">
+    <Param name="FileName" value="fuzzy.txt" />
+  </Publisher>
+</Test>
+
+</Peach>
